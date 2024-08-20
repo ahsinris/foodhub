@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button } from "@mui/material";
+import React from "react";
+import Appbar from "./Appbar";
+import Tabs from "./Tab";
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Appbar />
+      <div style={{ display: "flex", flex: "100%"  }}>
+        <div
+          style={{
+            display: "flex",
+            flex: "50%",
+            backgroundColor: "#ADD8E6",
+            height:"90vh"
+          }}
+       
+        ></div>
+        <div
+          style={{ display: "flex", flex: "50%",  }}
+       
+        ><Tabs/></div>
+        
+      </div>
     </div>
   );
-}
+};
 
 export default App;
