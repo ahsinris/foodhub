@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography, Box, TextField, Button } from '@mui/material';
 
 const data = [
   {
@@ -43,7 +43,7 @@ const data = [
     timestamp: 1724146558,
   },
   {
-    id: 4,
+    id: 5,
     addres: '',
     from: 'sds',
     status: '3',
@@ -57,10 +57,24 @@ const data = [
 const filteredData = data.filter((item) => item.status === '3');
 
 const ThirdTable = () => {
-  // Calculate the current timestamp only once
+  const [inputValues, setInputValues] = useState({});
+
+  // Handle input change for a specific row
+  const handleInputChange = (id, value) => {
+    setInputValues((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  // Handle submit for a specific row
+  const handleSubmit = (id) => {
+    console.log(`Submitted for ID ${id}: ${inputValues[id]}`);
+    // Add your submission logic here
+  };
+
   const newTimestamp = Math.floor(Date.now() / 1000);
 
-  // Function to calculate the difference in minutes
   const calculateTimeDifference = (timestamp) => {
     const differenceInSeconds = newTimestamp - timestamp;
     return Math.floor(differenceInSeconds / 60);
@@ -72,29 +86,30 @@ const ThirdTable = () => {
         <TableBody>
           {filteredData.map((row) => (
             <TableRow key={row.id}>
-              <TableCell
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Box sx={{ display: "flex", gap: "50px" }}>
-                  <Typography variant="body2">{row.id}</Typography>
-
-                  <Typography variant="body2">
-                    {row.orderType === 1 ? "In-store" : "Online"}
-                  </Typography>
+              <TableCell sx={{ display: 'block' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '50px' }}>
+                  {/* <Typography variant="body2">{row.id}</Typography> */}
+                  {/* <Typography variant="body2">{row.orderType === 1 ? 'In-store' : 'Online'}</Typography> */}
                 </Box>
-                <Box
-                  sx={{ bgcolor: "red", padding: "10px", borderRadius: "5px" }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "white", fontWeight: 600 }}
-                  >
+                <Box sx={{ bgcolor: 'white', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
+                  {/* <Typography variant="body2" sx={{ color: 'white', fontWeight: 600 }}>
                     {calculateTimeDifference(row.timestamp)}
-                  </Typography>
+                  </Typography> */}
+                </Box>
+                <Box sx={{ display: 'flex', gap: '10px', marginBottom: '10px', flexDirection: 'column' }}>
+                  <TextField
+                    label="Enter text"
+                    variant="outlined"
+                    size="small"
+                    value={inputValues[row.id] || ''}
+                    onChange={(e) => handleInputChange(row.id, e.target.value)}
+                    sx={{ width: '100%' }} // Adjust width here
+                    multiline // Allows text to wrap to the next line
+                    rows={4} // Number of rows in the text box
+                  />
+                  <Button variant="contained" color="primary" onClick={() => handleSubmit(row.id)} sx={{ alignSelf: 'flex-start' }}>
+                    Submit
+                  </Button>
                 </Box>
               </TableCell>
             </TableRow>

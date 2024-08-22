@@ -5,7 +5,6 @@ import MyTable from "./tab1";
 import SecondTable from "./tab2";
 import ThirdTable from "./tab3";
 
-
 const TabPanel = ({ children, value, index, ...other }) => (
   <div
     role="tabpanel"
@@ -34,8 +33,36 @@ const Muitabs = styled(MuiTabs)`
   }
 `;
 
+const data1 = {
+  message: "Success",
+  data: {
+    list: [
+      {
+        _id: "66c769a88044d69533712d19",
+        user_id: "8",
+        store_id: "8",
+        user_info: {
+          name: "asd",
+          email: "test@mail.com",
+          phone_number: "123456",
+        },
+        store_info: {
+          name: "asdhg",
+        },
+        order_counts_to_req_offer: 0,
+        created_at: "Thu Aug 22 2024 22:09:04 GMT+0530 (India Standard Time)",
+        __v: 0,
+      },
+    ],
+    count: 1,
+  },
+};
+
 const Tabs = () => {
   const [value, setValue] = useState(0);
+
+  // Extract the count value from data1
+  const count = data1.data.count;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -54,24 +81,23 @@ const Tabs = () => {
         aria-label="basic tabs example"
       >
         <Tab
-          label="CURRENT"
+          label={`FOLLOWERS(${count})`}
           {...a11yProps(0)}
           sx={{
             mx: 1,
-
             "&.Mui-selected": {
-              color: "black", // Ensure text color stays black when selected
+              color: "black", 
             },
           }}
         />
         <Tab
-          label="ON THE WAY"
+          // Show the count next to OFFER REQUEST
+          label={`OFFER REQUEST`}
           {...a11yProps(1)}
           sx={{
             mx: 1,
-
             "&.Mui-selected": {
-              color: "black", // Ensure text color stays black when selected
+              color: "black", 
             },
           }}
         />
@@ -80,7 +106,6 @@ const Tabs = () => {
           {...a11yProps(2)}
           sx={{
             mx: 1,
-
             "&.Mui-selected": {
               color: "black",
             },
@@ -91,10 +116,10 @@ const Tabs = () => {
         <MyTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <SecondTable/>
+        <SecondTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <ThirdTable/>
+        <ThirdTable />
       </TabPanel>
     </Box>
   );
